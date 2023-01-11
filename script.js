@@ -62,7 +62,7 @@ window.onload = function() {
 
     // Display Movies list
     // displayMovies(movies);
-    let sortedMovies = sortMoviesByAttr(movies, 'id');
+    let sortedMovies = sortMoviesByAttr(movies, 'title');
     displayMovies(sortedMovies);
 
 }
@@ -112,35 +112,39 @@ function sortMoviesByAttr(movies, sortAttr){
   // CODE GOES HERE
     for (let j = 0; j < movies.length - 1; j++) {
 
-        let max_num = movies[j];
+        let max_obj = movies[j];
         let max_location = j;
+        let max = getMaxMovieObject(movies, j, sortAttr);
+        max_obj = max.max_obj;
+        max_location = max.max_index;
 
-        for (let i = j; i < movies.length; i++) {
-            if (movies[i][sortAttr] > max_num[sortAttr]) {
-                // Know max AND it's index (location)
-                max_num = movies[i];
-                max_location = i;
-            }
-        }
+        // for (let i = j; i < movies.length; i++) {
+        //     if (movies[i][sortAttr] > max_num[sortAttr]) {
+        //         // Know max AND it's index (location)
+        //         max_num = movies[i];
+        //         max_location = i;
+        //     }
+        // }
         // swap the first and the last
         movies[max_location] = movies[j]; // --> 10
-        movies[j] = max_num;
+        movies[j] = max_obj;
     }
     return movies;
 }
 // console.log(sortMoviesByAttr(movies, "id"));
 
 function getMaxMovieObject(movies, start, sortAttr){
-  let maximum = numbers[start];
+  let max_obj = movies[start];
   let max_location = start
 
-  for (let i = start; i < numbers.length; i++) {
-      if (numbers[i] > maximum) {
-          maximum = numbers[i]
+  for (let i = start; i < movies.length; i++) {
+      if (movies[i][sortAttr] > max_obj[sortAttr]) {
+          max_obj = movies[i]
           max_location = i
       }
   }
-  return {max_number: maximum, max_index: max_location}
+
+  return {max_obj: max_obj, max_index: max_location}
 }
 
 
